@@ -25,6 +25,5 @@ jobs:
         run: |
           python deploy.py
         env:
-          SERVER_URL: ${'0.0.0.0'}
-        env:
+          SERVER_URL: ${{ secrets.SERVER_URL }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
