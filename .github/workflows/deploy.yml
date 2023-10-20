@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy Workflow
 
 on:
   push:
@@ -9,8 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SERVER_URL: ${{ secrets.SERVER_URL }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Python
@@ -18,12 +22,6 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-
-      - name: Deploy to Production
+      - name: Deploy to server
         run: |
-          python deploy.py
-        env:
-          SERVER_URL: ${{ secrets.SERVER_URL }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          echo "Deploying to $SERVER_URL with SECRET_KEY=$SECRET_KEY"
